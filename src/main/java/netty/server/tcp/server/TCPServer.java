@@ -10,6 +10,8 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.FixedLengthFrameDecoder;
+import io.netty.handler.codec.LineBasedFrameDecoder;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
 import netty.server.ServerHanlder;
@@ -33,8 +35,9 @@ public class TCPServer {
                     .childHandler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
-                            ch.pipeline().addLast("decoder",new StringDecoder());
-                            ch.pipeline().addLast("encoder",new StringEncoder());
+//                            ch.pipeline().addLast(new LineBasedFrameDecoder(2048));  // 以换行符作为结束的标志
+                            ch.pipeline().addLast(new FixedLengthFrameDecoder(3)); // 定长数据帧的解码器
+                            ch.pipeline().addLast(new StringDecoder());
                             ch.pipeline().addLast(new TCPServerHanlder());
                         }
                     }).option(ChannelOption.SO_BACKLOG,128)

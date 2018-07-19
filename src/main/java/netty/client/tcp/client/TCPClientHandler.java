@@ -32,7 +32,7 @@ public class TCPClientHandler extends ChannelInboundHandlerAdapter {
                 + "models in general and Netty’s threading model in particular, whose performance and consistency advantag"
                 + "es we discussed in detailIn this chapter you general, we recommend Java Concurrency in Practice by Bri"
                 + "an Goetz. His book will give We’ve reached an exciting point—in the next chapter;the counter is: 1 2222"
-                + "sdsa ddasd asdsadas dsadasdas overover").getBytes();
+                + "sdsa ddasd asdsadas dsadasdas"+System.getProperty("line.separator")).getBytes();
 
         shortReq = "123".getBytes();
     }

@@ -33,8 +33,7 @@ public class TCPClient {
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
                             ChannelPipeline channelPipeline = ch.pipeline();
-                            channelPipeline.addLast("decode",new StringDecoder());
-                            channelPipeline.addLast("encode",new StringEncoder());
+                            channelPipeline.addLast(new StringDecoder());
                             channelPipeline.addLast(new TCPClientHandler());
                         }
                     });
