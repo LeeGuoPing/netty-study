@@ -1,6 +1,7 @@
 package flash.io;
 
 import java.net.Socket;
+import java.util.Date;
 
 /**
  * @author liguoping
@@ -17,7 +18,7 @@ public class IOClient {
                 Socket socket = new Socket("127.0.0.1", 8000);
 
                 while (true) {
-                    socket.getOutputStream().write("hello world!".getBytes());
+                    socket.getOutputStream().write((new Date()+":hello world!").getBytes());
 
                     Thread.sleep(2000);
                 }

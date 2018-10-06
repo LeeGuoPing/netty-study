@@ -18,22 +18,31 @@ public class IOServer {
 
         final ServerSocket serverSocket = new ServerSocket(8000);
 
-        while (true) {
-            new Thread(() ->
-            {
+        // (1) 接受新连接线程
+        new Thread(() -> {
+            while (true) {
                 try {
+                    // (1) 阻塞方法获取新的连接
                     Socket accept = serverSocket.accept();
-                    InputStream inputStream = accept.getInputStream();
-                    int length = 0;
-                    byte[] bytes = new byte[1024];
-                    while ((length = inputStream.read(bytes)) != -1) {
-                        System.out.println(new String(bytes,0,length));
-                    }
+                    // (2) 每一个新的连接都创建一个线程,负责读取数据
+                    new Thread(() -> {
+                        try {
+                            InputStream inputStream = accept.getInputStream();
+                            int length;
+                            byte[] bytes = new byte[1024];
+                            while ((length = inputStream.read(bytes)) != -1) {
+                                System.out.println(new String(bytes, 0, length));
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                    }).start();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+            }
+        }).start();
 
-            });
-        }
     }
 }
